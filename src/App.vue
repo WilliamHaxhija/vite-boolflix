@@ -25,12 +25,25 @@ export default {
             };
 
             if ( store.searchedMovie !== '') {
+                this.getTvSerieFromApi();
                 axios.get(apiUrl, {
                 params: queryParams
             }).then((response) => {
                 store.movieList = response.data.results
             });
             };
+        },
+        getTvSerieFromApi() {
+            let apiUrl = 'https://api.themoviedb.org/3/search/tv?api_key=25378c3a1e8ccece435091404e238d2c';
+            const queryParams = {
+                query: store.searchedMovie
+            };
+
+            axios.get(apiUrl, {
+                params: queryParams
+            }).then((response) => {
+                store.tvSeriesList = response.data.results
+            });
         }
     }
 }
