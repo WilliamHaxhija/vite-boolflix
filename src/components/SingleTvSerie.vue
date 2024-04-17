@@ -12,6 +12,19 @@ export default {
         return {
             store
         };
+    },
+
+    methods: {
+        voteStars(number) {
+            let integer = Math.round(number / 2);
+            if (integer < 0) {
+                return 1;
+            } else if (integer > 5) {
+                return 5;
+            } else {
+                return integer;
+            };
+        }
     }
 }
 
@@ -38,9 +51,9 @@ export default {
             </div>
             <div v-else>{{ tvSerieInfo.original_language }}</div>
 
-            <div>{{ tvSerieInfo.vote_average }}</div>
+            <div>{{ voteStars(tvSerieInfo.vote_average) }}</div>
         </div>
-        <div class="ms-img">
+        <div class="ms-img" v-if="tvSerieInfo.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w185' + tvSerieInfo.poster_path" :alt="tvSerieInfo.name">
         </div>
     </div>

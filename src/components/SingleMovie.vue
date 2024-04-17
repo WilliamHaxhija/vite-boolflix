@@ -12,6 +12,19 @@ export default {
         return {
             store
         };
+    },
+
+    methods: {
+        voteStars(number) {
+            let integer = Math.round(number / 2);
+            if (integer < 0) {
+                return 1;
+            } else if (integer > 5) {
+                return 5;
+            } else {
+                return integer;
+            };
+        }
     }
 }
 
@@ -38,9 +51,12 @@ export default {
             </div>
             <div v-else>{{ movieInfo.original_language }}</div>
 
-            <div>{{ movieInfo.vote_average }}</div>
+            <span v-for="star in 5">
+                <i v-if="star <= voteStars(movieInfo.vote_average)" class="fa-solid fa-star plain"></i>
+                <i v-else class="fa-solid fa-star empty"></i>
+            </span>
         </div>
-        <div class="ms-img">
+        <div class="ms-img" v-if="movieInfo.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w185' + movieInfo.poster_path" :alt="movieInfo.title">
         </div>
     </div>
@@ -52,5 +68,13 @@ export default {
     img {
         max-width: 10%;
     }
+}
+
+.plain {
+    color: rgb(236, 236, 21);
+}
+
+.empty {
+    color: rgb(104, 103, 103);
 }
 </style>
