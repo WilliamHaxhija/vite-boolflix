@@ -19,8 +19,8 @@ export default {
 
 <template>
 
-<div class="col-3">
-        <div class="card">
+    <div class="col-3">
+        <div class="ms-infos">
             <div>{{ tvSerieInfo.name }}</div>
             <div>{{ tvSerieInfo.original_name }}</div>
 
@@ -37,8 +37,11 @@ export default {
                 <img src="../assets/img/flag-spain.png" alt="es-flag">
             </div>
             <div v-else>{{ tvSerieInfo.original_language }}</div>
-            
+
             <div>{{ tvSerieInfo.vote_average }}</div>
+        </div>
+        <div class="ms-img">
+            <img :src="'https://image.tmdb.org/t/p/w185' + tvSerieInfo.poster_path" :alt="tvSerieInfo.name">
         </div>
     </div>
 
@@ -46,8 +49,10 @@ export default {
 
 <style scoped lang="scss">
 
-img {
+.ms-infos {
+    img {
         max-width: 10%;
     }
+}
 
 </style>

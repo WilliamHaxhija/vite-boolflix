@@ -20,7 +20,7 @@ export default {
 <template>
 
     <div class="col-3">
-        <div class="card">
+        <div class="ms-infos">
             <div>{{ movieInfo.title }}</div>
             <div>{{ movieInfo.original_title }}</div>
 
@@ -40,14 +40,17 @@ export default {
 
             <div>{{ movieInfo.vote_average }}</div>
         </div>
+        <div class="ms-img">
+            <img :src="'https://image.tmdb.org/t/p/w185' + movieInfo.poster_path" :alt="movieInfo.title">
+        </div>
     </div>
 
 </template>
-    
-<style scoped lang="scss">
 
+<style scoped lang="scss">
+.ms-infos {
     img {
         max-width: 10%;
     }
-
+}
 </style>
