@@ -27,6 +27,7 @@ export default {
         <div class="card">
             <div>{{ movieInfo.title }}</div>
             <div>{{ movieInfo.original_title }}</div>
+
             <div v-if="movieInfo.original_language === 'en'">
                 <img src="../assets/img/flag-uk.png" alt="en-flag">
             </div>
@@ -40,6 +41,7 @@ export default {
                 <img src="../assets/img/flag-spain.png" alt="es-flag">
             </div>
             <div v-else>{{ movieInfo.original_language }}</div>
+            
             <div>{{ movieInfo.vote_average }}</div>
         </div>
     </div>
