@@ -22,8 +22,8 @@ export default {
 
 <template>
 
-    <div class="container">
-        <div class="row">
+    <div class="container p-3">
+        <div class="row p-3">
             <template v-if="store.movieList.length > 0 || store.tvSeriesList.length > 0">
                 <SingleMovie v-for="movie in store.movieList" :key="movie.id" :movieInfo="movie"></SingleMovie>
                 <SingleTvSerie v-for="tvSerie in store.tvSeriesList" :key="tvSerie.id" :tvSerieInfo="tvSerie"></SingleTvSerie>
