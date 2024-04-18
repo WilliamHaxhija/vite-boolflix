@@ -33,10 +33,10 @@ export default {
 <template>
 
     <div class="col-4 d-flex justify-content-center">
-        <div class="ms-card overflow-y-auto border mb-5">
-            <div class="ms-infos d-none p-4">
+        <div class="ms-card overflow-y-auto mb-5" :class="{border: movieInfo.poster_path !== null}">
+            <div class="ms-infos d-none p-4" :class="{dblock: movieInfo.poster_path === null}">
                 <div><strong>Titolo:</strong> {{ movieInfo.title }}</div>
-                <div><strong>Titolo Originale:</strong> {{ movieInfo.original_title }}</div>
+                <div v-if="movieInfo.original_name !== movieInfo.name"><strong>Titolo Originale:</strong> {{ movieInfo.original_title }}</div>
 
                 <div v-if="movieInfo.original_language === 'en'">
                     <img src="../assets/img/flag-uk.png" alt="en-flag">
@@ -71,7 +71,7 @@ export default {
 <style scoped lang="scss">
 
 .ms-card {
-    max-width: 345px;
+    width: fit-content;
     height: 515px;
     color: white;
     background-color: rgb(10, 10, 10);
@@ -87,6 +87,8 @@ export default {
 }
 
 .ms-infos {
+    height: 100%;
+    min-width: 335px;
     img {
         max-width: 10%;
     }
@@ -96,6 +98,16 @@ export default {
     }
 }
 
+.ms-img {
+    height: 100%;
+    
+    img{
+        height: 100%;
+        object-fit: cover;
+    }
+
+}
+
 .plain {
     color: rgb(236, 236, 21);
 }
@@ -103,4 +115,9 @@ export default {
 .empty {
     color: rgb(104, 103, 103);
 }
+
+.dblock {
+    display: block!important;
+}
+
 </style>

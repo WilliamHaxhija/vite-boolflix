@@ -33,10 +33,10 @@ export default {
 <template>
 
     <div class="col-4 d-flex justify-content-center">
-        <div class="ms-card overflow-y-auto border mb-5">
-            <div class="ms-infos d-none p-4">
+        <div class="ms-card overflow-y-auto mb-5" :class="{border: tvSerieInfo.poster_path !== null}">
+            <div class="ms-infos d-none p-4" :class="{dblock: tvSerieInfo.poster_path === null}">
                 <div><strong>Titolo:</strong> {{ tvSerieInfo.name }}</div>
-                <div><strong>Titolo Originale:</strong> {{ tvSerieInfo.original_name }}</div>
+                <div v-if="tvSerieInfo.original_name !== tvSerieInfo.name"><strong>Titolo Originale:</strong> {{ tvSerieInfo.original_name }}</div>
 
                 <div v-if="tvSerieInfo.original_language === 'en'">
                     <img src="../assets/img/flag-uk.png" alt="en-flag">
@@ -59,9 +59,11 @@ export default {
                 </span>
                 <div v-if="tvSerieInfo.overview"><strong>Overview:</strong> {{ tvSerieInfo.overview }}</div>
             </div>
-            <div class="ms-img" v-if="tvSerieInfo.poster_path">
+            <template  v-if="tvSerieInfo.poster_path !== null">
+                <div class="ms-img">
                 <img :src="'https://image.tmdb.org/t/p/w342' + tvSerieInfo.poster_path" :alt="tvSerieInfo.name">
             </div>
+            </template>
         </div>
     </div>
 
@@ -70,7 +72,7 @@ export default {
 <style scoped lang="scss">
 
 .ms-card {
-    max-width: 345px;
+    width: fit-content;
     height: 515px;
     color: white;
     background-color: rgb(10, 10, 10);
@@ -86,6 +88,9 @@ export default {
 }
 
 .ms-infos {
+    height: 100%;
+    min-width: 335px;
+
     img {
         max-width: 10%;
     }
@@ -95,12 +100,26 @@ export default {
     }
 }
 
+.ms-img {
+    height: 100%;
+    
+    img{
+        height: 100%;
+        object-fit: cover;
+    }
+
+}
+
 .plain {
     color: rgb(236, 236, 21);
 }
 
 .empty {
     color: rgb(104, 103, 103);
+}
+
+.dblock {
+    display: block!important;
 }
 
 </style>

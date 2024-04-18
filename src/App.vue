@@ -54,6 +54,9 @@ export default {
 
     <AppSearch @searchMovie="getMovieFromApi()"></AppSearch>
     <main>
+        <div v-if="store.searchedMovie === ''">
+            <h2>Qui appariranno i Film o le Serie Tv cercate.</h2>
+        </div>
         <AppContents></AppContents>
     </main>
 
@@ -62,5 +65,13 @@ export default {
 <style lang="scss">
 
     @use './style/generic';
+
+    main {
+        > div {
+            h2 {
+                text-align: center;
+            }
+        }
+    }
 
 </style>
