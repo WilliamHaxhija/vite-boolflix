@@ -13,7 +13,7 @@ export default {
 
     data() {
         return {
-          store
+            store
         };
     },
 
@@ -21,29 +21,34 @@ export default {
         getMovieFromApi() {
             let apiUrl = 'https://api.themoviedb.org/3/search/movie?api_key=25378c3a1e8ccece435091404e238d2c';
             const queryParams = {
-                query: store.searchedMovie
+                query: store.searchedContent
             };
 
-            if ( store.searchedMovie !== '') {
-                this.getTvSerieFromApi();
+            if (store.searchedContent !== '') {
                 axios.get(apiUrl, {
-                params: queryParams
-            }).then((response) => {
-                store.movieList = response.data.results
-            });
+                    params: queryParams
+                }).then((response) => {
+                    store.movieList = response.data.results
+                });
             };
         },
         getTvSerieFromApi() {
             let apiUrl = 'https://api.themoviedb.org/3/search/tv?api_key=25378c3a1e8ccece435091404e238d2c';
             const queryParams = {
-                query: store.searchedMovie
+                query: store.searchedContent
             };
 
-            axios.get(apiUrl, {
-                params: queryParams
-            }).then((response) => {
-                store.tvSeriesList = response.data.results
-            });
+            if (store.searchedContent !== '') {
+                axios.get(apiUrl, {
+                    params: queryParams
+                }).then((response) => {
+                    store.tvSeriesList = response.data.results
+                });
+            };
+        },
+        getContentsFromApi() {
+            this.getMovieFromApi();
+            this.getTvSerieFromApi();
         }
     }
 }
@@ -52,11 +57,9 @@ export default {
 
 <template>
 
-    <AppSearch @searchMovie="getMovieFromApi()"></AppSearch>
+    <AppSearch @searchContent="getContentsFromApi()"></AppSearch>
+    
     <main>
-        <div v-if="store.searchedMovie === ''">
-            <h2>Qui appariranno i Film o le Serie Tv cercate.</h2>
-        </div>
         <AppContents></AppContents>
     </main>
 
@@ -67,11 +70,11 @@ export default {
     @use './style/generic';
 
     main {
-        > div {
+        >div {
             h2 {
                 text-align: center;
             }
-        }
+    }
     }
 
 </style>

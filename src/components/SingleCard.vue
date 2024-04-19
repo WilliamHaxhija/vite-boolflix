@@ -3,9 +3,9 @@
 import { store } from '../store.js';
 
 export default {
-    name: 'SingleTvSerie',
+    name: 'SingleCard',
     props: {
-        tvSerieInfo: Object
+        cardInfo: Object
     },
 
     data() {
@@ -33,37 +33,39 @@ export default {
 <template>
 
     <div class="col-4 d-flex justify-content-center">
-        <div class="ms-card overflow-y-auto mb-5" :class="{border: tvSerieInfo.poster_path !== null}">
-            <div class="ms-infos d-none p-4" :class="{dblock: tvSerieInfo.poster_path === null}">
-                <div><strong>Titolo:</strong> {{ tvSerieInfo.name }}</div>
-                <div v-if="tvSerieInfo.original_name !== tvSerieInfo.name"><strong>Titolo Originale:</strong> {{ tvSerieInfo.original_name }}</div>
+        <div class="ms-card overflow-y-auto mb-5" :class="{border: cardInfo.poster_path !== null}">
+            
+            <div class="ms-infos d-none p-4" :class="{dblock: cardInfo.poster_path === null}">
+                <div><strong>Titolo:</strong> {{ cardInfo.title || cardInfo.name }}</div>
+                <div v-if="cardInfo.original_title !== cardInfo.title || cardInfo.original_name !== cardInfo.name"><strong>Titolo Originale:</strong> {{ cardInfo.original_title || cardInfo.original_name }}</div>
 
-                <div v-if="tvSerieInfo.original_language === 'en'">
+                <div v-if="cardInfo.original_language === 'en'">
                     <img src="../assets/img/flag-uk.png" alt="en-flag">
                 </div>
-                <div v-else-if="tvSerieInfo.original_language === 'fr'">
+                <div v-else-if="cardInfo.original_language === 'fr'">
                     <img src="../assets/img/flag-france.avif" alt="fr-flag">
                 </div>
-                <div v-else-if="tvSerieInfo.original_language === 'it'">
+                <div v-else-if="cardInfo.original_language === 'it'">
                     <img src="../assets/img/flag-italy.png" alt="it-flag">
                 </div>
-                <div v-else-if="tvSerieInfo.original_language === 'es'">
+                <div v-else-if="cardInfo.original_language === 'es'">
                     <img src="../assets/img/flag-spain.png" alt="es-flag">
                 </div>
-                <div v-else><strong>Language:</strong> {{ tvSerieInfo.original_language }}</div>
+                <div v-else><strong>Language:</strong> {{ cardInfo.original_language }}</div>
 
                 <strong class="me-1">Voto:</strong>
                 <span v-for="star in 5">
-                    <i v-if="star <= voteStars(tvSerieInfo.vote_average)" class="fa-solid fa-star plain"></i>
+                    <i v-if="star <= voteStars(cardInfo.vote_average)" class="fa-solid fa-star plain"></i>
                     <i v-else class="fa-solid fa-star empty"></i>
                 </span>
-                <div v-if="tvSerieInfo.overview"><strong>Overview:</strong> {{ tvSerieInfo.overview }}</div>
+
+                <div v-if="cardInfo.overview"><strong>Overview:</strong> {{ cardInfo.overview }}</div>
             </div>
-            <template  v-if="tvSerieInfo.poster_path !== null">
-                <div class="ms-img">
-                <img :src="'https://image.tmdb.org/t/p/w342' + tvSerieInfo.poster_path" :alt="tvSerieInfo.name">
+
+            <div class="ms-img" v-if="cardInfo.poster_path">
+                <img :src="'https://image.tmdb.org/t/p/w342' + cardInfo.poster_path" :alt="cardInfo.title">
             </div>
-            </template>
+
         </div>
     </div>
 
@@ -90,7 +92,6 @@ export default {
 .ms-infos {
     height: 100%;
     min-width: 335px;
-
     img {
         max-width: 10%;
     }

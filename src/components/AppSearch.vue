@@ -20,8 +20,8 @@ import { store } from '../store.js';
         <div class="container-fluid d-flex py-3 px-5 align-items-center">
             <h1 class="ms-5">BoolFlix</h1>
             <div class="d-flex flex-grow-1 justify-content-end me-5">
-                <input @keyup.enter="$emit('searchMovie')" v-model="store.searchedMovie" class="form-control me-3 p-2 h-25" type="text" placeholder="Search here...">
-                <button @click="$emit('searchMovie')" type="button" class="btn btn-secondary h-25">Search</button>
+                <input @keyup.enter="$emit('searchContent')" v-model="store.searchedContent" class="form-control me-3 p-2 h-25" type="text" placeholder="Search here...">
+                <button @click="$emit('searchContent')" type="button" class="btn btn-secondary h-25">Search</button>
             </div>
         </div>
     </header>
