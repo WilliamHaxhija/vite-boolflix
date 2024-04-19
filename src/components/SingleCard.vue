@@ -1,5 +1,7 @@
 <script>
 
+import axios from 'axios';
+
 export default {
     name: 'SingleCard',
     props: {
@@ -15,7 +17,8 @@ export default {
                 'es',
                 'ja',
                 'de'
-            ]
+            ],
+            actorsList: []
         };
     },
 
@@ -33,16 +36,22 @@ export default {
             } else {
                 return integer;
             };
+        },
+        getContentActorsListFromApi() {
+            let apiUrl = `https://api.themoviedb.org/3/movie/${this.cardInfo.id}/credits?api_key=25378c3a1e8ccece435091404e238d2c`;
+            axios.get(apiUrl).then((response) => {
+                this.actorsList = response.data.cast.slice(0, 5);
+            });
+            }
         }
     }
-}
 
 </script>
 
 <template>
 
     <div class="col-4 d-flex justify-content-center">
-        <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }">
+        <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }" @mouseenter="getContentActorsListFromApi">
 
             <div class="ms-infos d-none p-4" :class="{ dblock: cardInfo.poster_path === null }">
 
@@ -51,7 +60,7 @@ export default {
                 <div v-if="cardInfo.original_title !== cardInfo.title || cardInfo.original_name !== cardInfo.name">
                     <strong>Titolo Originale:</strong> {{ cardInfo.original_title || cardInfo.original_name }}
                 </div>
-                
+
                 <div>
                     <img v-if="flags.includes(cardInfo.original_language)" :src="getFlagImageUrl()" :alt="cardInfo.original_language">
                     <span v-else><strong class="me-1">Lingua:</strong> {{ cardInfo.original_language }}</span>
@@ -64,6 +73,11 @@ export default {
                 </span>
 
                 <div v-if="cardInfo.overview"><strong>Overview:</strong> {{ cardInfo.overview }}</div>
+
+                <div>
+                    <Span v-if="actorsList.length > 0"><Strong>Actors</Strong></Span>
+                    <div v-for="actor in actorsList">{{ actor.name }} - {{ actor.character }}</div>
+                </div>
             </div>
 
             <div class="ms-img" v-if="cardInfo.poster_path">

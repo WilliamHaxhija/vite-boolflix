@@ -58,7 +58,7 @@ export default {
 <template>
 
     <AppSearch @searchContent="getContentsFromApi()"></AppSearch>
-    
+
     <main>
         <AppContents></AppContents>
     </main>
