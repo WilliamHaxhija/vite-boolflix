@@ -1,7 +1,5 @@
 <script>
 
-import { store } from '../store.js';
-
 export default {
     name: 'SingleCard',
     props: {
@@ -10,11 +8,22 @@ export default {
 
     data() {
         return {
-            store
+            flags: [
+                'en',
+                'it',
+                'fr',
+                'es',
+                'ja',
+                'de'
+            ]
         };
     },
 
     methods: {
+        getFlagImageUrl() {
+            let flagImgName = this.cardInfo.original_language + '.png';
+            return new URL(`../assets/img/${flagImgName}`, import.meta.url).href;
+        },
         voteStars(number) {
             let integer = Math.round(number / 2);
             if (integer < 0) {
@@ -33,25 +42,20 @@ export default {
 <template>
 
     <div class="col-4 d-flex justify-content-center">
-        <div class="ms-card overflow-y-auto mb-5" :class="{border: cardInfo.poster_path !== null}">
-            
-            <div class="ms-infos d-none p-4" :class="{dblock: cardInfo.poster_path === null}">
-                <div><strong>Titolo:</strong> {{ cardInfo.title || cardInfo.name }}</div>
-                <div v-if="cardInfo.original_title !== cardInfo.title || cardInfo.original_name !== cardInfo.name"><strong>Titolo Originale:</strong> {{ cardInfo.original_title || cardInfo.original_name }}</div>
+        <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }">
 
-                <div v-if="cardInfo.original_language === 'en'">
-                    <img src="../assets/img/flag-uk.png" alt="en-flag">
+            <div class="ms-infos d-none p-4" :class="{ dblock: cardInfo.poster_path === null }">
+
+                <div><strong>Titolo:</strong> {{ cardInfo.title || cardInfo.name }}</div>
+
+                <div v-if="cardInfo.original_title !== cardInfo.title || cardInfo.original_name !== cardInfo.name">
+                    <strong>Titolo Originale:</strong> {{ cardInfo.original_title || cardInfo.original_name }}
                 </div>
-                <div v-else-if="cardInfo.original_language === 'fr'">
-                    <img src="../assets/img/flag-france.avif" alt="fr-flag">
+                
+                <div>
+                    <img v-if="flags.includes(cardInfo.original_language)" :src="getFlagImageUrl()" :alt="cardInfo.original_language">
+                    <span v-else><strong class="me-1">Lingua:</strong> {{ cardInfo.original_language }}</span>
                 </div>
-                <div v-else-if="cardInfo.original_language === 'it'">
-                    <img src="../assets/img/flag-italy.png" alt="it-flag">
-                </div>
-                <div v-else-if="cardInfo.original_language === 'es'">
-                    <img src="../assets/img/flag-spain.png" alt="es-flag">
-                </div>
-                <div v-else><strong>Language:</strong> {{ cardInfo.original_language }}</div>
 
                 <strong class="me-1">Voto:</strong>
                 <span v-for="star in 5">
@@ -72,7 +76,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-
 .ms-card {
     width: fit-content;
     height: 515px;
@@ -92,19 +95,20 @@ export default {
 .ms-infos {
     height: 100%;
     min-width: 335px;
+
     img {
         max-width: 10%;
     }
 
-    > * {
+    >* {
         margin: 6px 0;
     }
 }
 
 .ms-img {
     height: 100%;
-    
-    img{
+
+    img {
         height: 100%;
         object-fit: cover;
     }
@@ -120,7 +124,6 @@ export default {
 }
 
 .dblock {
-    display: block!important;
+    display: block !important;
 }
-
 </style>
