@@ -63,7 +63,8 @@ export default {
 
 <template>
 
-    <div class="col-4 d-flex justify-content-center">
+    <div v-if="contentGenres.includes(store.selectedGenre) || store.selectedGenre === 'Scegli un genere' || store.selectedGenre === ''"
+        class="col-4 d-flex justify-content-center">
         <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }"
             @mouseenter="getContentActorsListFromApi()">
 
@@ -94,7 +95,7 @@ export default {
                     <div v-for="actor in actorsList">{{ actor.name }} - {{ actor.character }}</div>
                 </div>
 
-                <div class="pb-5">
+                <div class="pb-5" v-if="contentGenres.length > 0">
                     <span><strong>Genres</strong></span>
                     <div>{{ contentGenres.join(', ') }}</div>
                 </div>

@@ -75,7 +75,15 @@ export default {
 </template>
 
 <style lang="scss">
+@use './style/generic';
 
-    @use './style/generic';
+main::-webkit-scrollbar-track {
+    background-color: #5a5a5a;
+    border-radius: 50px;
+}
 
+main::-webkit-scrollbar-thumb {
+    background-color: #a3a3a3;
+    border-radius: 50px;
+}
 </style>

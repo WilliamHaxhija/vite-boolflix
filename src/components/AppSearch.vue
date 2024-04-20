@@ -54,5 +54,6 @@ input {
 
 select {
     max-width: 12%;
+    cursor: pointer;
 }
 </style>
