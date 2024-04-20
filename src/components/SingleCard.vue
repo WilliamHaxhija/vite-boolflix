@@ -1,6 +1,7 @@
 <script>
 
 import axios from 'axios';
+import { store } from '../store.js';
 
 export default {
     name: 'SingleCard',
@@ -10,6 +11,7 @@ export default {
 
     data() {
         return {
+            store,
             flags: [
                 'en',
                 'it',
@@ -18,7 +20,8 @@ export default {
                 'ja',
                 'de'
             ],
-            actorsList: []
+            actorsList: [],
+            contentGenres: []
         };
     },
 
@@ -42,31 +45,43 @@ export default {
             axios.get(apiUrl).then((response) => {
                 this.actorsList = response.data.cast.slice(0, 5);
             });
-            }
+        },
+        getContentGenres() {
+            store.genresList.forEach(genre => {
+                if (this.cardInfo.genre_ids.includes(genre.id)) {
+                    this.contentGenres.push(genre.name);
+                }
+            });
         }
+    },
+    mounted() {
+        this.getContentGenres()
     }
+}
 
 </script>
 
 <template>
 
     <div class="col-4 d-flex justify-content-center">
-        <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }" @mouseenter="getContentActorsListFromApi">
+        <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }"
+            @mouseenter="getContentActorsListFromApi()">
 
             <div class="ms-infos d-none p-4" :class="{ dblock: cardInfo.poster_path === null }">
 
-                <div><strong>Titolo:</strong> {{ cardInfo.title || cardInfo.name }}</div>
+                <div><strong>Title:</strong> {{ cardInfo.title || cardInfo.name }}</div>
 
                 <div v-if="cardInfo.original_title !== cardInfo.title || cardInfo.original_name !== cardInfo.name">
-                    <strong>Titolo Originale:</strong> {{ cardInfo.original_title || cardInfo.original_name }}
+                    <strong>Original Title:</strong> {{ cardInfo.original_title || cardInfo.original_name }}
                 </div>
 
                 <div>
-                    <img v-if="flags.includes(cardInfo.original_language)" :src="getFlagImageUrl()" :alt="cardInfo.original_language">
-                    <span v-else><strong class="me-1">Lingua:</strong> {{ cardInfo.original_language }}</span>
+                    <img v-if="flags.includes(cardInfo.original_language)" :src="getFlagImageUrl()"
+                        :alt="cardInfo.original_language">
+                    <span v-else><strong class="me-1">Language:</strong> {{ cardInfo.original_language }}</span>
                 </div>
 
-                <strong class="me-1">Voto:</strong>
+                <strong class="me-1">Vote:</strong>
                 <span v-for="star in 5">
                     <i v-if="star <= voteStars(cardInfo.vote_average)" class="fa-solid fa-star plain"></i>
                     <i v-else class="fa-solid fa-star empty"></i>
@@ -74,10 +89,16 @@ export default {
 
                 <div v-if="cardInfo.overview"><strong>Overview:</strong> {{ cardInfo.overview }}</div>
 
-                <div>
-                    <Span v-if="actorsList.length > 0"><Strong>Actors</Strong></Span>
+                <div v-if="actorsList.length > 0">
+                    <span><strong>Actors</strong></span>
                     <div v-for="actor in actorsList">{{ actor.name }} - {{ actor.character }}</div>
                 </div>
+
+                <div>
+                    <span><strong>Genres</strong></span>
+                    <div>{{ contentGenres.join(', ') }}</div>
+                </div>
+
             </div>
 
             <div class="ms-img" v-if="cardInfo.poster_path">

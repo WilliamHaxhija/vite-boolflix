@@ -49,7 +49,16 @@ export default {
         getContentsFromApi() {
             this.getMovieFromApi();
             this.getTvSerieFromApi();
+        },
+        getGenresFromApi() {
+            let apiUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=25378c3a1e8ccece435091404e238d2c';
+            axios.get(apiUrl).then((response) => {
+                store.genresList = response.data.genres;
+            });
         }
+    },
+    mounted() {
+        this.getGenresFromApi()
     }
 }
 
@@ -68,13 +77,5 @@ export default {
 <style lang="scss">
 
     @use './style/generic';
-
-    main {
-        >div {
-            h2 {
-                text-align: center;
-            }
-    }
-    }
 
 </style>
