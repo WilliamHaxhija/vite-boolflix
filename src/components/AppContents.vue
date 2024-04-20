@@ -21,7 +21,7 @@ export default {
 <template>
 
     <div v-if="store.searchedContent === ''">
-        <h2>Qui appariranno i Film o le Serie Tv cercate.</h2>
+        <h2 class="text-dark-emphasis">I Film o le Serie Tv cercate saranno visualizzate qui.</h2>
     </div>
 
     <div class="container p-3">

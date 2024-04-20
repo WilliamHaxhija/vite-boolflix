@@ -9,6 +9,12 @@ export default {
         return {
             store
         };
+    },
+    methods: {
+        getSelectedGenre() {
+            store.selectedGenre = genre.name;
+            return store.selectedGenre;
+        }
     }
 }
 
@@ -22,9 +28,9 @@ export default {
             <div class="d-flex flex-grow-1 justify-content-end me-5">
                 <input @keyup.enter="$emit('searchContent')" v-model="store.searchedContent"
                     class="form-control me-3 p-2 h-25" type="text" placeholder="Search here...">
-                <select class="form-select me-3">
-                    <option selected>Open this select menu</option>
-                    <option value="1">1</option>
+                <select v-model="store.selectedGenre" class="form-select me-3" aria-label="Default select example">
+                    <option class="text-black-50" selected>Scegli un genere</option>
+                    <option v-for="genre in store.genresList" :value="genre.name">{{ genre.name }}</option>
                 </select>
                 <button @click="$emit('searchContent')" type="button" class="btn btn-secondary h-25">Search</button>
             </div>
@@ -47,6 +53,6 @@ input {
 }
 
 select {
-    max-width: 15%;
+    max-width: 12%;
 }
 </style>

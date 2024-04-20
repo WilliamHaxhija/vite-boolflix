@@ -94,7 +94,7 @@ export default {
                     <div v-for="actor in actorsList">{{ actor.name }} - {{ actor.character }}</div>
                 </div>
 
-                <div>
+                <div class="pb-5">
                     <span><strong>Genres</strong></span>
                     <div>{{ contentGenres.join(', ') }}</div>
                 </div>
