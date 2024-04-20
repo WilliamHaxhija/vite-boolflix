@@ -13,6 +13,21 @@ export default {
         return {
             store
         };
+    },
+    methods: {
+        moviesHorizontalScroll(event) {
+           event.preventDefault();
+           const slider = this.$refs.moviesSlider;
+           const content = this.$refs.movie;
+           slider.scrollLeft += event.deltaY * 1.5;
+        },
+        seriesHorizontalScroll(event) {
+           event.preventDefault();
+           const slider = this.$refs.seriesSlider;
+           const content = this.$refs.serie;
+           slider.scrollLeft += event.deltaY * 1.5;
+        }
+
     }
 }
 
@@ -32,13 +47,17 @@ export default {
                     <h2>Film</h2>
                 </div>
 
-                <SingleCard v-for="movie in store.movieList" :key="movie.id" :cardInfo="movie"></SingleCard>
+                <div ref="moviesSlider" class="d-flex overflow-x-auto" @mousewheel="moviesHorizontalScroll">
+                    <SingleCard ref="movies" v-for="movie in store.movieList" :key="movie.id" :cardInfo="movie"></SingleCard>
+                </div>
 
                 <div v-if="store.tvSeriesList.length > 0">
                     <h2>Serie Tv</h2>
                 </div>
 
-                <SingleCard v-for="tvSerie in store.tvSeriesList" :key="tvSerie.id" :cardInfo="tvSerie"></SingleCard>
+                <div ref="seriesSlider" class="d-flex overflow-x-auto" @mousewheel="seriesHorizontalScroll">
+                    <SingleCard ref="serie" v-for="tvSerie in store.tvSeriesList" :key="tvSerie.id" :cardInfo="tvSerie"></SingleCard>
+                </div>
                 
             </template>
         </div>
