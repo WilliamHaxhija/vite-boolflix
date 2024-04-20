@@ -52,6 +52,9 @@ export default {
                     this.contentGenres.push(genre.name);
                 }
             });
+        },
+        verticalScroll(event) {
+            event.stopPropagation();
         }
     },
     mounted() {
@@ -66,7 +69,7 @@ export default {
     <div v-if="contentGenres.includes(store.selectedGenre) || store.selectedGenre === 'Scegli un genere' || store.selectedGenre === ''"
         class="col-4 d-flex justify-content-center">
         <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }"
-            @mouseenter="getContentActorsListFromApi()">
+            @mouseenter="getContentActorsListFromApi()" @mousewheel="verticalScroll">
 
             <div class="ms-infos d-none p-4" :class="{ dblock: cardInfo.poster_path === null }">
 

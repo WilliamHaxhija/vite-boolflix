@@ -25,7 +25,7 @@ export default {
            event.preventDefault();
            const slider = this.$refs.seriesSlider;
            const content = this.$refs.serie;
-           slider.scrollLeft += event.deltaY * 1.5;
+           slider.scrollLeft += event.deltaY * 3;
         }
 
     }
