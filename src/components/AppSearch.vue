@@ -67,7 +67,7 @@ input {
 }
 
 select {
-    max-width: 10%;
+    max-width: 15%;
     cursor: pointer;
     color: white;
 }
@@ -86,7 +86,7 @@ ul {
         font-weight: 600;
         cursor: pointer;
         &:hover {
-            color: red;
+            color: rgb(225, 3, 3);
             transform: scale(1.1);
             transition: 0.2s;
         }
@@ -94,7 +94,7 @@ ul {
 }
 
 .active {
-    color: red;
+    color: rgb(225, 3, 3);
 }
 
 </style>

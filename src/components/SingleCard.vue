@@ -57,8 +57,10 @@ export default {
             event.stopPropagation();
         }
     },
+
     mounted() {
-        this.getContentGenres()
+        this.getContentGenres(),
+        this.getContentActorsListFromApi()
     }
 }
 
@@ -69,7 +71,7 @@ export default {
     <div v-if="contentGenres.includes(store.selectedGenre) || store.selectedGenre === 'Scegli un genere' || store.selectedGenre === ''"
         class="col-3 col-lg-4 d-flex justify-content-center">
         <div class="ms-card overflow-y-auto mb-5 position-relative" 
-            @mouseenter="getContentActorsListFromApi()" @mousewheel="verticalScroll">
+        @mousewheel="verticalScroll">
 
             <div class="ms-infos d-none overflow-y-auto p-4" :class="{ dblock: cardInfo.poster_path === null }">
 
@@ -123,7 +125,6 @@ export default {
 
     &:hover .ms-infos {
         display: block !important;
-        border: 1px solid rgba(122, 122, 122, 0.532);
     }
 
     &:hover .ms-img {
@@ -134,6 +135,7 @@ export default {
 .ms-infos {
     height: 100%;
     width: 344px;
+    border: 1px solid rgba(122, 122, 122, 0.532);
 
     img {
         max-width: 10%;
