@@ -37,7 +37,7 @@ export default {
             </nav>
             <div class="d-flex flex-grow-1 justify-content-end me-5">
                 <input @keyup.enter="$emit('searchContent')" v-model="store.searchedContent"
-                    class="form-control bg-dark me-3 p-2 h-25 border border-dark" type="text"
+                    class="form-control me-3 p-2 h-25 border border-dark" type="text"
                     placeholder="Search here...">
                 <select v-model="store.selectedGenre" class="form-select bg-dark me-3 border border-dark">
                     <option class="text-white-50" selected>Scegli un genere</option>
@@ -64,11 +64,6 @@ h1 {
 
 input {
     max-width: 35%;
-    color: white;
-
-    &:focus {
-        color: white;
-    }
 }
 
 select {

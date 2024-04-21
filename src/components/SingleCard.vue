@@ -67,11 +67,11 @@ export default {
 <template>
 
     <div v-if="contentGenres.includes(store.selectedGenre) || store.selectedGenre === 'Scegli un genere' || store.selectedGenre === ''"
-        class="col-4 d-flex justify-content-center">
-        <div class="ms-card overflow-y-auto mb-5" :class="{ border: cardInfo.poster_path !== null }"
+        class="col-3 col-lg-4 d-flex justify-content-center">
+        <div class="ms-card overflow-y-auto mb-5 position-relative" 
             @mouseenter="getContentActorsListFromApi()" @mousewheel="verticalScroll">
 
-            <div class="ms-infos d-none p-4" :class="{ dblock: cardInfo.poster_path === null }">
+            <div class="ms-infos d-none overflow-y-auto p-4" :class="{ dblock: cardInfo.poster_path === null }">
 
                 <div><strong>Title:</strong> {{ cardInfo.title || cardInfo.name }}</div>
 
@@ -98,7 +98,7 @@ export default {
                     <div v-for="actor in actorsList">{{ actor.name }} - {{ actor.character }}</div>
                 </div>
 
-                <div class="pb-5" v-if="contentGenres.length > 0">
+                <div class="pb-3" v-if="contentGenres.length > 0">
                     <span><strong>Genres</strong></span>
                     <div>{{ contentGenres.join(', ') }}</div>
                 </div>
@@ -119,11 +119,11 @@ export default {
     width: fit-content;
     height: 515px;
     color: white;
-    background-color: rgb(10, 10, 10);
     cursor: pointer;
 
     &:hover .ms-infos {
         display: block !important;
+        border: 1px solid rgba(122, 122, 122, 0.532);
     }
 
     &:hover .ms-img {
@@ -133,7 +133,7 @@ export default {
 
 .ms-infos {
     height: 100%;
-    min-width: 335px;
+    width: 344px;
 
     img {
         max-width: 10%;
